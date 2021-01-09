@@ -1,16 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:scoreboard/misc/themes/bloc/theme_bloc.dart';
+import 'package:scoreboard/misc/themes/default_themes.dart';
 import 'package:scoreboard/screens/home_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // await hydrated bloc storage
+  HydratedBloc.storage = await HydratedStorage.build();
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Score Counter',
-      home: HomeScreen(),
+    return BlocProvider<ThemeBloc>(
+      create: (context) => ThemeBloc(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          final lightTheme = predefinedThemes[1].data;
+          final darkTheme = predefinedThemes[2].data;
+
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: state.followSystem ? lightTheme : state.themeData,
+            darkTheme: state.followSystem ? darkTheme : state.themeData,
+            themeMode: state.followSystem ? ThemeMode.system : ThemeMode.light,
+            title: 'Score Counter',
+            home: const HomeScreen(),
+          );
+        },
+      ),
     );
   }
 }
