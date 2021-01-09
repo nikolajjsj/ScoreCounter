@@ -18,6 +18,8 @@ dependencies:
   get_it: ^5.0.0
   # visuals
   cupertino_icons: ^1.0.0
+  # misc
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:

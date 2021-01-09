@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scoreboard/misc/utils/color_utils.dart';
 import 'package:scoreboard/models/game_model.dart';
+import 'package:scoreboard/models/player_model.dart';
 import 'package:scoreboard/screens/game/game_list/bloc/games_bloc.dart';
+import 'package:scoreboard/screens/game/play_game/play_game_screen.dart';
 import 'package:scoreboard/screens/player_list/bloc/players_bloc.dart';
 import 'package:scoreboard/widgets/app_textfield.dart';
 
@@ -116,18 +118,28 @@ class _CreateGameScreenState extends State<CreateGameScreen> {
             ),
             color: Theme.of(context).accentColor,
             onPressed: () {
-              BlocProvider.of<GamesBloc>(context).add(
-                AddGame(
-                  Game(
-                    title: _titleController.text,
-                    maxScore: int.tryParse(_scoreController.text) ?? null,
-                    roundsCount: int.tryParse(_roundsController.text) ?? null,
-                    reversedScoring: _reversedScoring,
-                    players: [],
-                  ),
-                ),
+              List<Player> _gamers = [];
+              for (int i = 0; i < _players.length; i++) {
+                if (_players[i]) {
+                  _gamers.add(
+                    BlocProvider.of<PlayersBloc>(context).state.players[i],
+                  );
+                }
+              }
+
+              final Game _game = Game(
+                title: _titleController.text,
+                maxScore: int.tryParse(_scoreController.text) ?? null,
+                roundsCount: int.tryParse(_roundsController.text) ?? null,
+                reversedScoring: _reversedScoring,
+                players: _gamers,
+                date: DateTime.now(),
               );
-              Navigator.of(context).pop();
+
+              BlocProvider.of<GamesBloc>(context).add(AddGame(_game));
+              Navigator.of(context).pushReplacement(
+                PlayGameScreen.route(game: _game),
+              );
             },
           ),
         ],

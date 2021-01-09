@@ -7,6 +7,7 @@ class Game {
   final int roundsCount;
   final bool reversedScoring;
   final List<Player> players;
+  final DateTime date;
 
   const Game({
     @required this.title,
@@ -14,6 +15,7 @@ class Game {
     this.roundsCount,
     @required this.reversedScoring,
     @required this.players,
+    @required this.date,
   });
 
   Game.fromJson(Map<String, dynamic> json)
@@ -22,7 +24,8 @@ class Game {
         roundsCount = json['roundsCount'],
         reversedScoring = json['reversedScoring'],
         players =
-            json['players'].map((player) => Player.fromJson(player)).tolist();
+            json['players'].map((player) => Player.fromJson(player)).tolist(),
+        date = DateTime.fromMillisecondsSinceEpoch(json['date']);
 
   Map<String, dynamic> toJson() => {
         'title': title,
@@ -30,5 +33,6 @@ class Game {
         'roundsCount': roundsCount,
         'reversedScoring': reversedScoring,
         'players': players.map((player) => player.toJson()).toList(),
+        'date': date.millisecondsSinceEpoch,
       };
 }
