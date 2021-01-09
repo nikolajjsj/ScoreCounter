@@ -23,15 +23,15 @@ class HomeScreen extends StatelessWidget {
         children: [
           CardWidget(
             title: 'CREATE A NEW GAME',
-            color: Colors.red,
+            color: Colors.green[600],
           ),
           CardWidget(
             title: 'GAME LIST',
-            color: Colors.purple,
+            color: Colors.red[600],
           ),
           CardWidget(
             title: 'PLAYER LIST',
-            color: Colors.blue,
+            color: Colors.blue[600],
           ),
         ],
       ),
