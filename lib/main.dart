@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:scoreboard/misc/init/global_bloc.dart';
 import 'package:scoreboard/misc/message_service/message_widget.dart';
 import 'package:scoreboard/misc/preferences/preferences.dart';
 import 'package:scoreboard/misc/service_locator.dart';
@@ -18,30 +19,27 @@ void main() async {
   setupServiceLocator();
   await app<AppPreferences>().initialize();
 
-  runApp(MyApp());
+  runApp(GlobalBloc(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ThemeBloc>(
-      create: (context) => ThemeBloc(),
-      child: BlocBuilder<ThemeBloc, ThemeState>(
-        builder: (context, state) {
-          final lightTheme = predefinedThemes[1].data;
-          final darkTheme = predefinedThemes[2].data;
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        final lightTheme = predefinedThemes[1].data;
+        final darkTheme = predefinedThemes[2].data;
 
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: state.followSystem ? lightTheme : state.themeData,
-            darkTheme: state.followSystem ? darkTheme : state.themeData,
-            themeMode: state.followSystem ? ThemeMode.system : ThemeMode.light,
-            title: 'Score Counter',
-            home: const HomeScreen(),
-            builder: (context, child) => MessageWidget(child: child),
-          );
-        },
-      ),
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: state.followSystem ? lightTheme : state.themeData,
+          darkTheme: state.followSystem ? darkTheme : state.themeData,
+          themeMode: state.followSystem ? ThemeMode.system : ThemeMode.light,
+          title: 'Score Counter',
+          home: const HomeScreen(),
+          builder: (context, child) => MessageWidget(child: child),
+        );
+      },
     );
   }
 }
