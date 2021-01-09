@@ -16,7 +16,14 @@ class NameCard extends StatelessWidget {
       child: Container(
         color: _theme.cardTheme.color,
         padding: const EdgeInsets.all(8.0),
-        child: Center(child: Text(title, style: _theme.textTheme.bodyText2)),
+        constraints: BoxConstraints(minWidth: 100.0),
+        child: Center(
+          child: Text(
+            title,
+            style: _theme.textTheme.bodyText2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ),
     );
   }
