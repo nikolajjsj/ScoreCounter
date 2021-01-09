@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:scoreboard/misc/message_service/message_widget.dart';
 import 'package:scoreboard/misc/preferences/preferences.dart';
 import 'package:scoreboard/misc/service_locator.dart';
 import 'package:scoreboard/misc/themes/bloc/theme_bloc.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
             themeMode: state.followSystem ? ThemeMode.system : ThemeMode.light,
             title: 'Score Counter',
             home: const HomeScreen(),
+            builder: (context, child) => MessageWidget(child: child),
           );
         },
       ),
