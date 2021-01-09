@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:scoreboard/misc/preferences/preferences.dart';
+import 'package:scoreboard/misc/service_locator.dart';
 import 'package:scoreboard/misc/themes/bloc/theme_bloc.dart';
 import 'package:scoreboard/misc/themes/default_themes.dart';
 import 'package:scoreboard/screens/home_page.dart';
@@ -10,6 +12,10 @@ void main() async {
 
   // await hydrated bloc storage
   HydratedBloc.storage = await HydratedStorage.build();
+
+  // setup Get_it and SharedPreferences
+  setupServiceLocator();
+  await app<AppPreferences>().initialize();
 
   runApp(MyApp());
 }
