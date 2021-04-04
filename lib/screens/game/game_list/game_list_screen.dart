@@ -15,8 +15,6 @@ class GameListScreen extends StatelessWidget {
       appBar: AppBar(title: Text('Game list')),
       body: BlocBuilder<GamesBloc, GamesState>(
         builder: (context, state) {
-          print(state.games.length);
-
           return ListView.builder(
             itemCount: state.games.length,
             itemBuilder: (context, index) {

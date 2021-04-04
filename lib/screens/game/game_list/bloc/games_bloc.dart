@@ -15,7 +15,6 @@ class GamesBloc extends HydratedBloc<GamesEvent, GamesState> {
     if (json['games'] != null) {
       List<Game> _games = [];
       for (var game in json['games']) _games.add(Game.fromJson(game));
-      print(json['games']);
       return GamesState(games: _games);
     }
     return GamesState(games: []);
